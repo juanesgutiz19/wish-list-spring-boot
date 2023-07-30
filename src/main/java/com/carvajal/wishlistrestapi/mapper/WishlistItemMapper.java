@@ -2,11 +2,7 @@ package com.carvajal.wishlistrestapi.mapper;
 
 import com.carvajal.wishlistrestapi.dto.WishlistItemRequestDto;
 import com.carvajal.wishlistrestapi.dto.WishlistItemResponseDto;
-import com.carvajal.wishlistrestapi.model.Item;
-import com.carvajal.wishlistrestapi.model.User;
 import com.carvajal.wishlistrestapi.model.WishlistItem;
-import com.carvajal.wishlistrestapi.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import org.mapstruct.*;
 
 

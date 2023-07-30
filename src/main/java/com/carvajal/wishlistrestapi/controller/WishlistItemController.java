@@ -18,7 +18,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
+
+import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
 @AllArgsConstructor
 @RestController
@@ -43,8 +46,14 @@ public class WishlistItemController {
                     @ApiResponse(responseCode = "201", description = "Items returned successfully")
             }
     )
-    public ResponseEntity<WishlistItemResponseDto> createWishlistItem(@RequestBody WishlistItemRequestDto wishlistItemRequestDto) {
-        return new ResponseEntity(wishlistItemService.createWishlistItem(wishlistItemRequestDto), HttpStatus.CREATED);
+    public ResponseEntity<Void> createWishlistItem(@RequestBody WishlistItemRequestDto wishlistItemRequestDto) {
+        WishlistItemResponseDto wishlistItemResponseDto = wishlistItemService.createWishlistItem(wishlistItemRequestDto);
+        URI location = fromUriString("/api/v1/wishlist-items")
+                    .path("/{id}")
+                    .buildAndExpand(wishlistItemResponseDto.getWishlistItemsId())
+                    .toUri();
+        return ResponseEntity.created(location).build();
+        //return new ResponseEntity(wishlistItemService.createWishlistItem(wishlistItemRequestDto), HttpStatus.CREATED);
     }
 
 }
