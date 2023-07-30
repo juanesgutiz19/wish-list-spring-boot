@@ -3,6 +3,7 @@ package com.carvajal.wishlistrestapi.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Generated
@@ -26,7 +27,7 @@ public class Item {
     private String description;
 
     @Column(name = "price", nullable = false)
-    private double price;
+    private BigDecimal price;
 
     @Column(name = "stock_quantity", nullable = false)
     private int stockQuantity;

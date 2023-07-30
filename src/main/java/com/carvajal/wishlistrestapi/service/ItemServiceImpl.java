@@ -1,6 +1,6 @@
 package com.carvajal.wishlistrestapi.service;
 
-import com.carvajal.wishlistrestapi.dto.ItemDto;
+import com.carvajal.wishlistrestapi.dto.ItemResponseDto;
 import com.carvajal.wishlistrestapi.mapper.ItemMapper;
 import com.carvajal.wishlistrestapi.repository.ItemRepository;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
 
     @Override
-    public List<ItemDto> findAllItems() {
-        return itemMapper.itemsToItemDtos(itemRepository.findAll());
+    public List<ItemResponseDto> findAllItems() {
+        return itemMapper.itemsToItemResponseDtos(itemRepository.findAll());
     }
 }
