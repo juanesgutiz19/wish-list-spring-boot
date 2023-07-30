@@ -17,6 +17,7 @@ import java.util.List;
 
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorMessage> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         ErrorMessage message = new ErrorMessage(
@@ -58,6 +59,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<Object>(message, HttpStatus.BAD_REQUEST);
     }
+
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     protected ResponseEntity<Object> handleNoHandlerFoundException(
             NoHandlerFoundException ex,
@@ -71,11 +73,10 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.NOT_FOUND.value(),
                 new Date(),
-                "Constraint Violation "+details ,
+                "Constraint Violation " + details,
                 request.getDescription(false));
 
         return new ResponseEntity<Object>(message, HttpStatus.NOT_FOUND);
 
     }
-
 }
