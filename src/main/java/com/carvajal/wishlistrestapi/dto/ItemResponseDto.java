@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
-public class ItemDto {
+public class ItemResponseDto {
     private UUID itemId;
     private String label;
     private String description;

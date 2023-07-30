@@ -1,6 +1,6 @@
 package com.carvajal.wishlistrestapi.controller;
 
-import com.carvajal.wishlistrestapi.dto.ItemDto;
+import com.carvajal.wishlistrestapi.dto.ItemResponseDto;
 import com.carvajal.wishlistrestapi.exception.ErrorMessage;
 import com.carvajal.wishlistrestapi.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,7 +41,7 @@ public class ItemController {
                     @ApiResponse(responseCode = "200", description = "Items returned successfully")
             }
     )
-    public ResponseEntity<List<ItemDto>> getAllItems() {
+    public ResponseEntity<List<ItemResponseDto>> getAllItems() {
         return ResponseEntity.ok(itemService.findAllItems());
     }
 
