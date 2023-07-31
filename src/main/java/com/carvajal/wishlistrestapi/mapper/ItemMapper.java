@@ -9,8 +9,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
     ItemResponseDto itemToItemResponseDto(Item item);
-
     Item itemResponseDtoToItem(ItemResponseDto itemResponseDto);
     List<ItemResponseDto> itemsToItemResponseDtos(List<Item> items);
-
 }

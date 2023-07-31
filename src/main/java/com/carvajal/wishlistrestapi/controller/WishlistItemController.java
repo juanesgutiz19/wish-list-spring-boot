@@ -1,10 +1,9 @@
 package com.carvajal.wishlistrestapi.controller;
 
-import com.carvajal.wishlistrestapi.dto.ItemResponseDto;
 import com.carvajal.wishlistrestapi.dto.WishlistItemRequestDto;
 import com.carvajal.wishlistrestapi.dto.WishlistItemResponseDto;
+import com.carvajal.wishlistrestapi.dto.WishlistItemUpdateRequestDto;
 import com.carvajal.wishlistrestapi.exception.ErrorMessage;
-import com.carvajal.wishlistrestapi.service.ItemService;
 import com.carvajal.wishlistrestapi.service.WishlistItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
@@ -43,17 +42,34 @@ public class WishlistItemController {
     @Operation(
             summary = "Create a new wishlist item",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Items returned successfully")
+                    @ApiResponse(responseCode = "201", description = "Items returned successfully"),
+                    @ApiResponse(responseCode = "404", description = "User or item not found",
+                            content = {@Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorMessage.class)),
+                            }),
             }
     )
     public ResponseEntity<Void> createWishlistItem(@RequestBody WishlistItemRequestDto wishlistItemRequestDto) {
         WishlistItemResponseDto wishlistItemResponseDto = wishlistItemService.createWishlistItem(wishlistItemRequestDto);
         URI location = fromUriString("/api/v1/wishlist-items")
-                    .path("/{id}")
-                    .buildAndExpand(wishlistItemResponseDto.getWishlistItemsId())
-                    .toUri();
+                .path("/{id}")
+                .buildAndExpand(wishlistItemResponseDto.getWishlistItemsId())
+                .toUri();
         return ResponseEntity.created(location).build();
-        //return new ResponseEntity(wishlistItemService.createWishlistItem(wishlistItemRequestDto), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{wishlistItemId}")
+    @Operation(
+            summary = "Update wishlist item",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Wishlist item updated successfully"),
+                    @ApiResponse(responseCode = "404", description = "Wishlist item not found",
+                            content = {@Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorMessage.class)),
+                            }),
+            }
+    )
+    public ResponseEntity<WishlistItemResponseDto> updateWishlistItem(@RequestBody WishlistItemUpdateRequestDto wishlistItemUpdateRequestDto, @PathVariable UUID wishlistItemId) {
+        return ResponseEntity.status(HttpStatus.OK).body(wishlistItemService.updateWishlistItem(wishlistItemUpdateRequestDto, wishlistItemId));
+    }
 }
