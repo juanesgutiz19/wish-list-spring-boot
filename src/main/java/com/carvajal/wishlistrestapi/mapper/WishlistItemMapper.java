@@ -5,6 +5,8 @@ import com.carvajal.wishlistrestapi.dto.WishlistItemResponseDto;
 import com.carvajal.wishlistrestapi.model.WishlistItem;
 import org.mapstruct.*;
 
+import java.util.Set;
+
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, ItemMapper.class, ItemUUIDMapper.class, UserUUIDMapper.class})
 public interface WishlistItemMapper {
@@ -18,7 +20,6 @@ public interface WishlistItemMapper {
             @Mapping(target = "enabled", source = "enabled")
     })
     WishlistItem wishlistItemRequestDtoToWishlistItem(WishlistItemRequestDto wishlistItemRequestDto);
-
     WishlistItemResponseDto wishlistItemToWishlistItemResponseDto(WishlistItem wishlistItem);
-
+    Set<WishlistItemResponseDto> wishlistItemsToWishlistItemResponseDto(Set<WishlistItem> wishlistItems);
 }
